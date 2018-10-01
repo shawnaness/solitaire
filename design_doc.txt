@@ -1,0 +1,57 @@
+           _ _ _        _
+ ___  ___ | (_) |_ __ _(_)_ __ ___
+/ __|/ _ \| | | __/ _` | | '__/ _ \
+\__ \ (_) | | | || (_| | | | |  __/
+|___/\___/|_|_|\__\__,_|_|_|  \___|
+
+INSTRUCTIONS
+-------------------------------------------------------------------------------
+To run the game, run ./solitaire.py
+
+For the sake of conserving space and making the output easier to read, each 
+suit is represented only by the first letter of its name. So, the Four of 
+Hearts becomes "4H"; the King of Clubs becomes "KC", and so on. You should be
+able to also see the color of the cards, so hopefully that helps!
+
+Note that the "piles" in the game run horizontally, rather than vertically!
+
+There are prompts in the game as to what to type:
+	- foundation refers to the piles that are built up for each suit, from Ace
+	to King.
+	- tableau refers to all the piles laid out on the table.
+	
+When moving cards from/around the tableau, you can either pick the bottommost
+card or the entire visible pile.
+
+DESIGN CHOICES
+-------------------------------------------------------------------------------
+The method solitaire in the class Solitaire starts the game! It runs a REPL
+that prints out the game board and allows the user to input their moves.
+
+The printField function is called in each loop of the REPL to print the 
+pieces of the game board, including the current cards in the hand, the length
+of the deck and discard piles, the tops of the foundation piles, and the
+tableau piles. These are abstracted into printHand, printFoundations, and
+printTableau as necessary for the sake of clarity.
+
+The makeMove function is called every time the user inputs their move choice;
+it then calls drawCard, playHand, or moveCard, depending on the user's 
+choice.
+
+The numHiddenTableau array keeps track of how many cards are hidden in 
+each pile in the tableau. Whenever we clear all visible cards in any given
+pile, we should reveal the next hidden card in the pile; this logic is 
+handled in printTableau, so that this check happens every time the field
+is printed (i.e. every move).
+
+In normal solitaire, the discard is not shuffled back into the deck when the
+deck runs empty; however, I couldn't find a method in the pyCardDeck library
+to add a list of cards back to the deck without shuffling.
+
+TOOLS
+-------------------------------------------------------------------------------
+I used Python because it's much more concise than many other languages, and 
+because it has a lot of useful external libraries.
+
+I used the Python packages Colorama (for coloring the cards in the output) and 
+pyCardDeck (for the card deck functionality).
