@@ -117,16 +117,17 @@ class Solitaire:
 			print('Deck empty. Resetting discard...')
 			self.deck.add_many(self.discard)
 			self.discard.clear()
-		for i in range(3):
+		numDraw = min(3, len(self.deck))	
+		for i in range(numDraw):
 			self.hand.append(self.deck.draw())
 
 
 	def playHand(self):	
 		if self.hand:
 			card = self.hand[0]
-			place = input('Type a pile 0-6 or \'foundation\' to place the ' + 
+			place = input('Type a pile 0-6 or \'foundation\' (or \'f\') to place the ' + 
 				card.name + ': ')
-			if (place == "foundation"):
+			if (place == "foundation" or place == "f"):
 				if (self.validFoundationMove(card)):
 					self.foundations[card.suit].append(self.hand.pop(0))
 				else:
@@ -151,9 +152,9 @@ class Solitaire:
 				"or \'pile\' to move the full visible pile: ")
 			if (pileOrCard == "card"):
 				card = pile[-1]
-				place = input('Type a pile 0-6 or \'foundation\' to place the ' + 
+				place = input('Type a pile 0-6 or \'foundation\' (or \'f\') to place the ' + 
 					card.name + ': ')
-				if (place == "foundation"):
+				if (place == "foundation" or place == "f"):
 					if (self.validFoundationMove(card)):
 						self.foundations[card.suit].append(pile.pop())
 					else:
@@ -204,8 +205,8 @@ class Solitaire:
 	def checkWin(self):
 		return (len(self.foundations["Hearts"]) == 13 and
 			len(self.foundations["Clubs"]) == 13 and
-			len(self.foundations["Diamonds"] == 13 and
-			len(self.foundations["Spades"]) == 13))
+			len(self.foundations["Diamonds"]) == 13 and
+			len(self.foundations["Spades"]) == 13)
 				
 	def solitaire(self):
 		print("Welcome to Solitaire!")
@@ -221,6 +222,7 @@ class Solitaire:
 			self.makeMove(move)
 			gameWon = self.checkWin()
 		print("Yay! You won!")
+		input("Press enter to quit: ")
 			
 
 
